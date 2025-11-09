@@ -1,0 +1,11 @@
+CHIP FullSub
+{
+    IN a,b,bIn;
+    OUT diff,bOut;
+
+    PARTS:
+    
+    HalfSub (a=a, b=b, diff=diff1, bOut=bOut1);
+    HalfSub (a=diff1, b=bIn, diff=diff, bOut=bOut2);
+    Or (a=bOut1, b=bOut2, out=bOut);
+}

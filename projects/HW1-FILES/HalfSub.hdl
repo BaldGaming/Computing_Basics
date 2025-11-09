@@ -1,0 +1,10 @@
+CHIP HalfSub
+{
+    IN a,b;
+    OUT diff, bOut;
+
+    PARTS:
+    Not (in=a, out=aNot);
+    Xor (a=a, b=b, out=diff);
+    And (a=aNot, b=b, out=bOut);
+}

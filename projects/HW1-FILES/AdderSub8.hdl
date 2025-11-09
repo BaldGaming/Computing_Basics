@@ -1,0 +1,7 @@
+CHIP  {
+    IN ;
+    OUT ;
+
+    PARTS:
+    
+}
