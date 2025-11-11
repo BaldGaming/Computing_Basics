@@ -1,7 +1,10 @@
-CHIP  {
-    IN ;
-    OUT ;
+CHIP AdderSub {
+    IN a,b,control,cIn;
+    OUT res,cOut;
 
     PARTS:
-    
+    FullAdder (a=a, b=b, c=cIn, sum=res1, carry=cOut1);
+    FullSub (a=a, b=b, bIn=cIn, diff=res2, bOut=cOut2);
+    Mux (a=res1, b=res1, sel=control, out=res);
+    Mux (a=cOut1, b=cOut2, sel=control, out=cOut);
 }
