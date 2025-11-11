@@ -15,8 +15,8 @@ CHIP DMux4Way
     OUT a, b, c, d;
 
     PARTS:
-    DMux (in=in, sel=sel[1], a=a-0, b=b-0);
+    DMux (in=in, sel=sel[1], a=a0, b=b0);
 
-    DMux (in=a-0, sel=sel[0], a=a, b=b);
-    DMux (in=b-0, sel=sel[0], a=c, b=d);
+    DMux (in=a0, sel=sel[0], a=a, b=b);
+    DMux (in=b0, sel=sel[0], a=c, b=d);
 }
