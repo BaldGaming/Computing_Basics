@@ -1,0 +1,10 @@
+CHIP Smart
+{
+    IN in[16], load;
+    OUT out[16];
+
+    PARTS:
+
+    Mux (a[0..15]=true, b=in, sel=load, out=out0);
+    Register ()
+}
