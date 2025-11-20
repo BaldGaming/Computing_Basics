@@ -27,5 +27,4 @@ rem  echo Running "%_arg1%"
   java -classpath "%CLASSPATH%;.;bin/classes;bin/lib/Hack.jar;bin/lib/HackGUI.jar;bin/lib/Simulators.jar;bin/lib/SimulatorsGUI.jar;bin/lib/Compilers.jar" ^
     HardwareSimulatorMain "%_arg1%"
 )
-QRes.exe /x:1920 /y:1080
 popd
