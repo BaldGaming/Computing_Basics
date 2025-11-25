@@ -1,0 +1,9 @@
+CHIP IsNegEven4
+{
+    IN a[4];
+    OUT out;
+
+    PARTS:
+    Not (in=a[0], out=isEven); // Checks the LSB and converts it into a flag based of if it's an even or odd number.
+    And (a=isEven, b=a[3], out=out); // Checks both conditions for the chip by passing the LSB and MSB through an And gate.
+}
