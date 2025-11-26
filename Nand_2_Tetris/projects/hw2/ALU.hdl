@@ -12,37 +12,41 @@ CHIP ALU
     OUT 
         out[16], // 16-bit output
         zr,      // (out == 0, 1, 0)
-        ng;      // (out < 0,  1, 0)
+        ng,      // (out < 0,  1, 0)
+        neg;     // New flag for checking hasNegEvenGroup.
 
     PARTS:
         // zx: Mux16 - if false | Not16 - if true.
-        Mux16 (a=x ,b=false, sel=zx, out=x-zx);
-        Not16 (in=x-zx, out=x-zx-not);
+        Mux16 (a=x ,b=false, sel=zx, out=xZx);
+        Not16 (in=xZx, out=xZxNot);
         
-        // nx: Mux16 - Accepts x-zx / x-zx-not.
-        Mux16 (a=x-zx, b=x-zx-not, sel=nx, out=x-nx);
+        // nx: Mux16 - Accepts xZx / xZx-not.
+        Mux16 (a=xZx, b=xZxNot, sel=nx, out=xNx);
 
         // zy: Mux16 - if false, Not16 - if true.
-        Mux16 (a=y ,b=false, sel=zy, out=y-zy);
-        Not16 (in=y-zy, out=y-zy-not);
+        Mux16 (a=y ,b=false, sel=zy, out=yZy);
+        Not16 (in=yZy, out=yZyNot);
 
-        // nx: Mux16 - Accepts y-zy / y-zy-not.
-        Mux16 (a=y-zy, b=y-zy-not, sel=ny, out=y-ny);
+        // nx: Mux16 - Accepts yZy / yZy-not.
+        Mux16 (a=yZy, b=yZyNot, sel=ny, out=yNy);
 
         // f: Or16 - if f true | Add16 - if f false.
-        Add16 (a=x-nx, b=y-ny, out=f-add);
-        And16 (a=x-nx, b=y-ny, out=f-and);
-        Mux16 (a=f-and, b=f-add, sel=f, out=f-out);
+        Add16 (a=xNx, b=yNy, out=fAdd);
+        And16 (a=xNx, b=yNy, out=fAnd);
+        Mux16 (a=fAnd, b=fAdd, sel=f, out=fOut);
 
         // no: Not16 - if true.
-        Not16 (in=f-out, out=no-out);
+        Not16 (in=fOut, out=noOut);
 
         // ng: Mux16 - creates flags ng output.
-        Mux16 (a=f-out, b=no-out, sel=no, out[0..7]=no-out-left, out[8..15]=no-out-right, out[15]=ng, out=out);
+        Mux16 (a=fOut, b=noOut, sel=no, out[0..7]=noOutLeft, out[8..15]=noOutRight, out[15]=ng, out=finalOut, out=out);
 
         // zr: Uses flags to determain output.
-        Or8Way (in=no-out-left, out=flag0);
-        Or8Way (in=no-out-right, out=flag1);
+        Or8Way (in=noOutLeft, out=flag0);
+        Or8Way (in=noOutRight, out=flag1);
         Or (a=flag0, b=flag1, out=flag);
         Not (in=flag, out=zr);
+
+        // Creates flags to check GroupHasNegEven status.
+        GroupHasNegEven(in=finalOut, out=neg);
 }
