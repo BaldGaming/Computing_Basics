@@ -14,4 +14,4 @@ CHIP CountNegEvenGroups
     HalfAdder (a=sum1, b=sum2, sum=count[0], carry=carry3); // Sums the first two sums to get the LSB.
 
     FullAdder (a=carry1, b=carry2, c=carry3, sum=count[1], carry=count[2]); // Sums the three carries to get the remaining bits.
-}
+} 
