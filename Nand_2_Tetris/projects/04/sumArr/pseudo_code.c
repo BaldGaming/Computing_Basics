@@ -18,6 +18,7 @@ int main()
         
         ptr++; // Move pointer to next address
         i++;
+    }
 }
 
 
