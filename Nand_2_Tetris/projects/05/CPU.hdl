@@ -32,5 +32,75 @@ CHIP CPU {
         pc[15];          // Address of next instruction
 
     PARTS:
-    //// Replace this comment with your code.
+    
+    Mux16 (a = instruction, b = ALUout, sel = instruction[15] , out = Aout); // Mux for the A register;
+
+    // These two create the load for the ARegister;
+    Not (in = instruction[15], out = NotCinst);
+    Or (a = NotCinst, b = instruction[5], out = LoadA);
+
+    ARegister (in = Aout, load = LoadA, out = outAReg, out[0..14] = addressM); // ARegister;
+
+    Mux16 (a = outAReg, b = inM, sel = instruction[12], out = yOut); // Mux for ALU y input;
+
+    And (a = instruction[4], b = instruction[15], out = LoadD); // load for DRegister
+
+    DRegister (in = ALUout, load = LoadD, out = outDReg); // DRegister
+
+    ALU (x = outDReg,
+         y = yOut,
+         zx = instruction[11],
+         nx = instruction[10],
+         zy = instruction[9],
+         ny = instruction[8],
+         f = instruction[7],
+         no = instruction[6],
+         
+         out = ALUout, out = outM, zr = zr, ng = ng); // ALU
+
+    And (a = instruction[3], b = instruction[15], out = writeM); // writeM.
+
+    PC (in = outAReg, inc = true, load = PCload, reset = reset, out[0..14] = pc); // pc
+
+    // JMP (Unconditional)
+    And(a = instruction[2], b = instruction[1], out = JMP1);
+    And(a = JMP1, b = instruction[0], out = JMP);
+
+    // JEQ (Equal 0)
+    And(a = instruction[1], b = zr, out = JEQ);
+
+    // JNE (Not Equal 0)
+    Not (in = zr, out = notZr);
+    And (a = instruction[2], b = instruction[0], out = JNE1);
+    And (a = JNE1, b = notZr, out = JNE);
+
+    // JGT (Greater Than 0)
+    Not (in = ng, out = notNg);
+    And(a = instruction[0], b = notNg, out = JGT1);
+    And(a = JGT1, b = notZr, out = JGT);
+
+    // JLT (Less Than 0)
+    And(a = instruction[2], b = ng, out = JLT);
+
+    // JGE (Greater or Equal 0)
+    And(a = instruction[1], b = instruction[0], out = JGE1);
+    And(a = JGE1, b = notNg, out = JGE);
+
+    // JLE (Less or Equal 0)
+    And(a = instruction[2], b = instruction[1], out = JLE1);
+    Or(a = ng, b = zr, out = isNegOrZero);
+    And(a = JLE1, b = isNegOrZero, out = JLE);
+
+    Or8Way (in[0] = JMP,
+            in[1] = JEQ,
+            in[2] = JNE,
+            in[3] = JGT,
+            in[4] = JLT,
+            in[5] = JGE,
+            in[6] = JLE,
+            in[7] = false,
+            out = jmpFlag);
+
+    And (a = instruction[15], b = jmpFlag, out = PCload);
+
 }
