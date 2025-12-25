@@ -1,0 +1,9 @@
+﻿  HackAssembler.c
+C:\Github - College\Software Engineering - VSc\Computing_Basics\Nand_2_Tetris\projects\AssemblerProject\HackAssembler\HackAssembler.c(84,14): warning C4101: 'addressStr1': unreferenced local variable
+  Parser.c
+C:\Github - College\Software Engineering - VSc\Computing_Basics\Nand_2_Tetris\projects\AssemblerProject\HackAssembler\Parser.c(142,19): warning C4090: 'return': different 'const' qualifiers
+C:\Github - College\Software Engineering - VSc\Computing_Basics\Nand_2_Tetris\projects\AssemblerProject\HackAssembler\Parser.c(146,1): warning C4090: 'initializing': different 'const' qualifiers
+  Code.c
+  SymbolTable.c
+  Generating Code...
+  HackAssembler.vcxproj -> C:\Github - College\Software Engineering - VSc\Computing_Basics\Nand_2_Tetris\projects\AssemblerProject\x64\Debug\HackAssembler.exe
