@@ -1,0 +1,77 @@
+//  ##################################;
+// Adjusted code:
+
+// int x, y, q, rem, v;
+// x = 988;
+// y = 21;
+// q = 0
+// v = x - y
+
+// WHILE_LOOP:
+    // if (v < 0) goto END_WHILE_LOOP;
+    // q = q + 1;
+    // v = v - y;
+    // goto WHILE_LOOP;
+
+// END_WHILE_LOOP:
+    // rem = v + y;
+
+// END:
+    // goto END;
+
+//  ##################################;
+
+// x = 988;
+push constant 988
+pop static 0
+
+// y = 21;
+push constant 21
+pop static 1
+
+// q = 0;
+push constant 0
+pop static 2
+
+// v = x - y;
+push static 0
+push static 1
+sub
+pop static 3
+
+// while loop;
+label WHILE_LOOP
+
+    // exit condition;
+    push static 3
+    push constant 0
+    lt
+    if-goto END_WHILE_LOOP
+
+    // q = q + 1
+    push static 2
+    push constant 1
+    add
+    pop static 2
+
+    // v = v - y;
+    push static 3
+    push static 1
+    sub
+    pop static 3
+
+    // goto WHILE_LOOP;
+    goto WHILE_LOOP
+
+label END_WHILE_LOOP
+
+    // rem = v + y;
+    push static 3
+    push static 1
+    add
+    pop static 4
+
+    goto END
+
+label END
+    goto END

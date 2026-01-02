@@ -1,0 +1,83 @@
+// MAIN:
+function main 0
+    push static 0
+    call SumOfSquares 1
+    pop static 1
+
+// END:
+label END
+    goto END
+
+// SumOfSquares:
+function SumOfSquares 0
+    // if (n != 0) goto RECURSIVE_STEP;
+    push argument 0
+    push constant 0
+    eq
+    not
+    if-goto RECURSION
+
+    // return 0;
+    push constant 0
+    return
+
+// RECURSIVE_STEP:
+label RECURSION
+    // n_arg = n - 1; AND push n_arg;
+    push argument 0
+    push constant 1
+    sub
+
+    // call SumOfSquares;
+    call SumOfSquares 1
+
+    // push n; push n; AND call MULT;
+    push argument 0
+    push argument 0
+    call MULT 2
+
+    // return_val = prev_result + n_squared;
+    add
+    
+    // return return_val;
+    return
+
+// MULT:
+function MULT 2
+    // mult_sum = 0;
+    push constant 0
+    pop local 0
+
+    // mult_i = 0;
+    push constant 0
+    pop local 1
+
+// MULT_LOOP:
+label MULT_LOOP
+    // if (mult_i >= mult_y) goto MULT_END;
+    push local 1
+    push argument 1
+    lt
+    not
+    if-goto MULT_END
+
+    // mult_sum += mult_x;
+    push local 0
+    push argument 0
+    add
+    pop local 0
+
+    // mult_i = mult_i + 1;
+    push local 1
+    push constant 1
+    add
+    pop local 1
+
+    // goto MULT_LOOP;
+    goto MULT_LOOP
+
+// MULT_END:
+label MULT_END
+    // return mult_sum;
+    push local 0
+    return

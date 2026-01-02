@@ -96,7 +96,12 @@ int parser_parseNextLine(char line[]) {
             //updating instructionType
             instructionType = A_INSTRUCTION;
             //updating symbol
-            copyUntilChar(command + 1, address, '\0');
+            char* ptr = command + 1;
+            while (isspace(*ptr)) {
+                ptr++;
+            }
+            copyUntilChar(ptr, address, '\0');
+
             //updating dest, comp, jump to empty
             *symbol  = '\0';
             *dest    = '\0';
