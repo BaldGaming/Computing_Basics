@@ -1,0 +1,62 @@
+// void main() {
+//     static int q;
+function Question1.main 0
+// static q
+    // q = calcQuotient(98, 21);
+    push constant 98
+    push constant 21
+    call Question1.calcQuotient 2
+    pop static 0 // q
+
+label END
+    goto END
+// }
+
+
+// int calcQuotient(x, y) {
+// int q, v;
+function Question1.calcQuotient 2
+// argument: 0=x, 1=y
+// local:    0=q, 1=v
+
+    // q = 0
+    push constant 0
+    pop local 0
+
+    // v = x - y
+    push argument 0
+    push argument 1
+    sub
+    pop local 1
+
+// WHILE_LOOP:
+label WHILE_LOOP
+
+    // if(v < 0) goto END_LOOP;
+    push local 1
+    push constant 0
+    lt
+    if-goto END_LOOP
+
+    // q = q + 1;
+    push local 0
+    push constant 1
+    add
+    pop local 0
+
+    // v = v - y
+    push local 1
+    push argument 1
+    sub
+    pop local 1
+    
+    // goto WHILE_LOOP;
+    goto WHILE_LOOP
+
+// END_LOOP
+label END_LOOP
+
+    // return q;
+    push local 0
+    return
+// }
