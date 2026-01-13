@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
     symbolTable_addEntry("ARG", 2);
     symbolTable_addEntry("THIS", 3);
     symbolTable_addEntry("THAT", 4);
-    symbolTable_addEntry("myPredifinedVariable", 16);
 
     symbolTable_print();
 
@@ -81,7 +80,7 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
-    int nextVariableAddress = 17;
+    int nextVariableAddress = 16;
 
     while (parser_parseNextLine(line)) {
         if (parser_instructionType() == COMMENT_OR_EMPTY || parser_instructionType() == L_INSTRUCTION)
