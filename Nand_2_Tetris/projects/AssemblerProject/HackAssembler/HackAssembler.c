@@ -140,3 +140,4 @@ int main(int argc, char *argv[])
     printf("\nClosing the output file.\n");
     return 0;
 }
+
