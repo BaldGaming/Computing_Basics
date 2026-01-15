@@ -1,0 +1,124 @@
+// function Point addPoints(Point p1, Point p2)
+function Point.addPoints 2
+
+// let newX = p1.getX() + p2.getX()
+push argument 0
+call Point.getX
+push argument 1
+call Point.getX
+add
+pop local 0
+
+// let newY = p1.getY() + p2.getY()
+push argument 0
+call Point.getY
+push argument 1
+call Point.getY
+add
+pop local 1
+
+// return Point.new(newX, newY)
+push local 0
+push local 1
+call Point.new 2
+return
+
+
+// method int getX()
+function Point.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+
+// method int getY
+function Point.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+
+
+// method Point plus(Point q)
+function Point.plus 2
+
+// newX = x + q.getX()
+push argument 0
+pop pointer 0
+push this 0
+push argument 0
+call Point.getX 1
+add
+pop local 0
+
+// newY = y + q.getY()
+push this 1
+push argument 1
+call Point.getY 1
+add
+pop local 1
+
+
+// return Point.new(newX, newY)
+push local 0
+push local 1
+call Point.new 2
+return
+
+
+// constructor Point new(int ax, int ay)
+function Point.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+
+// let x = ax
+push argument 0
+pop this 0
+
+// let y = ay
+push argument 1
+pop this 1
+
+// let pointCount = pointCount + 1
+push static 0
+push constant 1
+add
+pop static 0
+push pointer 0
+return
+
+
+// method void print
+function Print.print 0
+
+// do Output.printChar(40)
+push argument 0
+pop pointer 0
+push constant 40
+call Output.printChar 1
+pop temp 0
+
+// do Output.printInt(x)
+push this 0
+call Output.printInt 1
+pop temp 0
+
+// do Output.printChar(44)
+push constant 44
+call Output.printChar 1
+pop temp 0
+
+// do Output.printInt(y)
+push this 1
+call Output.printInt 1
+pop temp 0
+
+// do Output.printChar(41)
+push constant 41
+call Output.printChar 1
+pop temp 0
+
+// return
+push constant 0
+return

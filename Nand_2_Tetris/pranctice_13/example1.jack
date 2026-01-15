@@ -1,0 +1,8 @@
+local 0 a
+local 1 length
+local 2 i
+local 3 sum
+
+while (i < length) {
+    let i = i + 1
+}

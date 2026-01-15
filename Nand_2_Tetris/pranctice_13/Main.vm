@@ -1,0 +1,29 @@
+// function void main
+function Main.main 3
+
+// let p1 = Point.new(1, 2)
+push constant 1
+push constant 2
+call Point.new 2
+pop local 0 // p1
+
+// let p2 = Point.new(3, 4)
+push constant 3
+push constant 4
+call Point.new 2
+pop local 1 // p2
+
+// let p3 = p1.plus(p2)
+push local 0
+push local 1
+call Point.plus 2
+pop local 2 // p3
+
+// do p3.print()
+push local 2
+call Point.print 1
+pop temp 0
+
+// return 0
+push constant 0
+return

@@ -1,0 +1,83 @@
+function Point.addPoints 2
+push argument 0
+call Point.getX 1
+push argument 1
+call Point.getX 1
+add
+pop local 0
+push argument 0
+call Point.getY 1
+push argument 1
+call Point.getY 1
+add
+pop local 1
+push local 0
+push local 1
+call Point.new 2
+return
+
+function Point.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+
+function Point.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+
+function Point.plus 2
+push argument 0
+pop pointer 0
+push this 0
+push argument 1
+call Point.getX 1
+add
+pop local 0
+push this 1
+push argument 1
+call Point.getY 1
+add
+pop local 1
+push local 0
+push local 1
+call Point.new 2
+return
+
+function Point.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push static 0
+push constant 1
+add
+pop static 0
+push pointer 0
+return
+
+function Point.print 0
+push argument 0
+pop pointer 0
+push constant 40
+call Output.printChar 1
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push constant 44
+call Output.printChar 1
+pop temp 0
+push this 1
+call Output.printInt 1
+pop temp 0
+push constant 41
+call Output.printChar 1
+pop temp 0
+push constant 0
+return

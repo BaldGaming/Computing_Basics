@@ -1,0 +1,11 @@
+/** Tests the Point class. */
+class Main {
+    function void main() {
+        var Point p1, p2, p3;
+        let p1 = Point.new(1, 2);
+        let p2 = Point.new(3, 4);
+        let p3 = p1.plus(p2);
+        do p3.print();                // Should print (4,6)
+        return;
+    }
+}

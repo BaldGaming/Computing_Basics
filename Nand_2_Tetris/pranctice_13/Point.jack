@@ -1,0 +1,50 @@
+/** Represents a Point. */
+class Point {
+    field int x, y;
+    static int pointCount;
+
+    /** Static function that returns the sum of two points */
+    function Point addPoints(Point p1, Point p2) {
+        var int newX, newY;
+        let newX = p1.getX() + p2.getX();
+        let newY = p1.getY() + p2.getY();
+        return Point.new(newX, newY);
+    }
+
+    /** Returns x */
+    method int getX() {
+        return x;
+    }
+
+    /** Returns y */
+    method int getY() {
+        return y;
+    }
+        
+    /** Returns a new Point representing the sum of this point and q */
+    method Point plus(Point q) {
+        var int newX, newY;
+        let newX = x + q.getX();
+        let newY = y + q.getY();
+        return Point.new(newX, newY);
+    }
+
+    /** Constructs a new point */
+    constructor Point new(int ax, int ay) {
+        let x = ax;
+        let y = ay;
+        let pointCount = pointCount + 1;
+        return this;
+    }
+
+    /** Prints this point in format (x,y) */
+    method void print() {
+        do Output.printChar(40);      // (
+        do Output.printInt(x);
+        do Output.printChar(44);      // ,
+        do Output.printInt(y);
+        do Output.printChar(41);      // )
+        return;
+    }
+
+}
