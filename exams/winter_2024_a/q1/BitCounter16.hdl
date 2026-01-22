@@ -1,0 +1,15 @@
+CHIP BitCounter16 {
+    IN a[16];
+    OUT count[5];
+
+    PARTS:
+        BitCounter4(a = a[0..3],   count1);
+        BitCounter4(a = a[4..7],   count2);
+        BitCounter4(a = a[8..11],  count3);
+        BitCounter4(a = a[12..15], count4);
+
+        Adder3bit(a = count1, b = count2, sum = sum1, carry = carry1);
+        Adder3bit(a = count3, b = count4, sum = sum2, carry = carry2);
+
+        Adder4bit(a[0..2] = sum1, a[3] = carry1, b[0..2] =sum2 , b[3] = carry2,  sum = count[0..3], carry = count[4]);
+}

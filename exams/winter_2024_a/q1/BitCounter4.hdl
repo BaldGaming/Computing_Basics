@@ -1,0 +1,9 @@
+CHIP BitCounter4 {
+    IN a[4];
+    OUT count[3];
+
+    PARTS:
+        FullAdder(a = a[1], b = a[2], c = a[0], sum = sum, carry = carry);
+        HalfAdder(a = a[3], b = sum, sum = count[0], carry = carry1);
+        HalfAdder(a = carry, b = carry1, sum = count[1], carry = count[2]);
+}

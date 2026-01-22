@@ -1,0 +1,8 @@
+CHIP Adder4bit {
+    IN a[4], b[4];
+    OUT sum[4], carry;
+
+    PARTS:
+        Adder3bit(a = a[0..2], b = b[0..2], sum = sum[0..2], carry = carry1);
+        FullAdder(a = a[3], b = b[3], c = carry1, sum = sum[3], carry = carry);
+}

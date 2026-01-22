@@ -1,0 +1,103 @@
+// STATIC: 0-n, 1-m
+// DIV_BY_M:
+function q3.div_by_m 5
+// LOCAL: 0-i, 1-result, 2-powm, 3-prev, 4-prev2
+
+    // result = 0
+    push constant 0
+    pop local 1
+
+    // WHILE1:
+    label WHILE1
+        // if (!(n > 0)) goto END_WHILE1
+        push argument 0
+        push constant 0
+        gt
+        not
+        if-goto END_WHILE1
+
+        // prev2 = 0
+        push constant 0
+        pop local 4
+
+        // prev = 1
+        push constant 1
+        pop local 3
+
+        // powm = m
+        push argument 1
+        pop local 2
+
+        // WHILE2
+        label WHILE2:
+            // if (powm > n) goto END_WHILE2
+            push local 2
+            push argument 0
+            gt
+            if-goto END_WHILE2
+
+            // prev2 = prev
+            push local 3
+            pop local 4
+
+            // prev = powm
+            push local 2
+            pop local 3
+
+            // i = 0
+            push constant 0
+            pop local 0
+
+            // FOR
+            label FOR:
+                // if (!(i < (m - 1))) goto END_FOR
+                push local 0
+                push constant 1
+                push argument 1
+                sub
+                lt
+                not
+                if-goto END_FOR
+
+                // powm = powm + prev
+                push local 2
+                push local 3
+                add
+                pop local 2
+
+                // i = i + 1
+                push local 0
+                push constant 1
+                add
+                pop local 0
+
+                // goto FOR
+                goto FOR
+
+            // END_FOR
+            label END_FOR:
+                // goto WHILE2
+                goto WHILE2
+
+        // END_WHILE2
+        label END_WHILE2:
+            // result = result + prev2
+            push local 1
+            push local 4
+            add
+            pop local 1
+
+            // n = n - prev
+            push argument 0
+            push local 3
+            sub
+            pop argument 0
+
+            // goto WHILE1
+            goto WHILE1
+
+    // END_WHILE1
+    label END_WHILE1
+        // return result
+        push local 1
+        return
