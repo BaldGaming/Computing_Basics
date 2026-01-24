@@ -1,0 +1,62 @@
+// STATIC: 0-x, 1-y
+// POWER:
+function pow.pow 3
+// LOCAL: 0-XpowYmin1, 1-XpowY, 2-i
+
+    // if (y != 0) goto SKIP_IF
+    push argument 1
+    push constant 0
+    nt
+    if-goto SKIP_IF
+
+    // return 1;
+    push constant 1
+    return
+    
+    // SKIP_IF:
+    label SKIP_IF
+    // XpowYmin1 = POWER(x, y - 1);
+    push argument 0
+    push argument 1
+    push constant 1
+    sub
+    call pow.pow 2
+    pop local 0
+
+    // XpowY = 0;
+    push constant 0
+    pop local 1
+    
+    // i = 0
+    push constant 0
+    pop local 2
+
+    // FOR:
+    label FOR
+        // if (!(i < x)) goto END_FOR
+        push local 2
+        push argument 0
+        lt
+        not
+        if-goto END_FOR
+
+        // XpowY = XpowY + XpowYmin1;
+        push local 1
+        push local 0
+        add
+        pop local 1
+
+        // i++;
+        push constant 1
+        push local 2
+        add
+        pop local 2
+
+        // goto FOR;
+        goto FOR
+                
+    // END_FOR:
+    label END_FOR
+        // return XpowY;
+        push local 1
+        return

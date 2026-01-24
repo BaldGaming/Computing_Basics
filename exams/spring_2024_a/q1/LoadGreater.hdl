@@ -1,0 +1,8 @@
+CHIP LoadGreater {
+    IN a[16], b[16], load;
+    OUT out[16];
+
+    PARTS:
+        MaxFinder2(a = a, b = b, max = res);
+        Register(in = res, load = load, out = out);
+}

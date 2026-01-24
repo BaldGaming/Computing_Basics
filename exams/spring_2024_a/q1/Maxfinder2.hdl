@@ -1,0 +1,30 @@
+CHIP Maxfinder2 {
+    IN a[16], b[16];
+    OUT max[16];
+
+    PARTS:
+        // 16/4 bits
+        Comparator4bit(a = a[0..3], b = b[0..3], eq = eq0123, gt = gt0123, lt = lt0123);
+        Comparator4bit(a = a[4..7], b = b[4..7], eq = eq4567, gt = gt4567, lt = lt4567);
+        Comparator4bit(a = a[8..11], b = b[8..11], eq = eq891011, gt = gt891011, lt = lt891011);
+        Comparator4bit(a = a[12..15], b = b[12..15], eq = eq12131415, gt = gt12131415, lt = lt12131415);
+
+        // eq
+        And(a = eq0123, b = eq4567, out = eq1);
+        And(a = eq891011, b = eq12131415, out = eq2);
+        And(a = eq3, b = eq210, out = myeq, out = eq);
+
+        // gt
+        And(a = eq0123, b = gt4567, out = gt1);
+        And(a = eq0123, b = eq4567, out = gt2);
+        And(a = gt2, b = gt891011, out = gt3);
+        And(a = eq891011, b = gt12131415, out = gt4);
+        And(a = gt2, b = gt4, out = gt5);
+        Or(a = gt0123, b = gt1, out = gt6);
+        Or(a = gt3, b = gt5, out = gt7);
+        Or(a = gt6, b = gt7, out = mygt, out = gt);
+
+        //lt
+        Or(a = myeq, b = mygt, out = eqOrgt);
+        Not(in = eqOrgt, out = lt);
+}

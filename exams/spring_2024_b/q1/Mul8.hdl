@@ -1,0 +1,15 @@
+CHIP Mult8 {
+    IN a[8], b[8];
+    OUT res[8];
+
+    PARTS:
+        Mux8(a = false, b = a, sel = b[0], out = out1); // use 0 or a
+        ShiftLeft8(in = a, out = shift1);               // 1*a
+
+        Mux8(a = false, b = shift1, sel = b[1], out = out2); // use 0 or shift1
+        ShiftLeft8(in = shift1, out = shift2);               // 1*a
+}
+
+
+
+???

@@ -1,0 +1,57 @@
+// STATIC: 0-n
+// SUMOFSQUARES:
+function q3.SumOfSquares 2
+// LOCAL: 0-sum, 1-i
+
+    // if (n != 0) goto SKIP_IF
+    push argument 0
+    push constant 0
+    eq
+    not
+    if-goto SKIP_IF
+
+    // return 0
+    push constant 0
+    return
+
+    // SKIP_IF:
+    label SKIP_IF:
+        push constant 0
+        push constant 0
+        pop local 0
+        pop local 1
+
+        // FOR_START:
+        label FOR_START:
+            // if (!(i < n)) goto END_FOR
+            push local 1
+            push argument 0
+            lt
+            not
+            if-goto END_FOR
+            
+            // sum = sum + n
+            push local 0
+            push argument 0
+            add
+            pop local 0
+
+            // i = i + 1
+            push local 1
+            push constant 1
+            add
+            pop local 1
+
+            // goto FOR_START
+            goto FOR_START
+
+        // END_FOR:
+        label END_FOR:
+            // return sum + SumOfSquaresAdjusted(n - 1)
+            push local 0
+            push argument 0
+            push constant 1
+            sub
+            call q3.SumOfSquares 2
+            add
+            return

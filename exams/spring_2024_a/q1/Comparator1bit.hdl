@@ -1,0 +1,17 @@
+CHIP Comparator1bit {
+    IN a, b;
+    OUT eq, gt, lt;
+
+    PARTS:
+        // eq
+        Xor(a = a, b = b, out = axorb);
+        Not(in = axorb, out = eq);
+
+        // gt
+        Not(in = b, out = notb);
+        And(a = a, b = notb, out = gt);
+
+        // lt
+        Not(in = a, out = nota);
+        And(a = nota, b = b, out = lt);
+}

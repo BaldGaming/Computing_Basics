@@ -1,0 +1,25 @@
+CHIP NewALU8bit {
+    IN a[8], b[8], code[2];
+    OUT out[8];
+
+    PARTS:
+        // a+b
+        Add16(a = a, b = b, out = AplusB);
+
+        // a-b
+        Not16(in = b, out = notB);
+        Inc16(in = notB, out = minusB);
+        Add16(a = a, b = minusB, out = AminusB);
+
+        // a*b
+        Mult8(a = a, b = b, out = AtimesB);
+
+        // a⊕b
+        Not16(in = a, out = notA);
+        And16(a = notA, b = b, out = notAandB);
+        And16(a = a, b = notB, out = AandnotB);
+        Or16(a = notAandB, b = AandnotB, out = AxorB);
+
+        // output
+        Mux4Way16(a = AplusB, b = AminusB, c = AtimesB, d = AxorB, sel = code, out = out);
+}

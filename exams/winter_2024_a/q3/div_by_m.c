@@ -69,10 +69,3 @@ int main() {
 
 // END_WHILE1:
 //     return result
-
-
-
-// DIV_BY_M:
-
-//     int i, result, powm, prev, prev2;
-//     result = 0

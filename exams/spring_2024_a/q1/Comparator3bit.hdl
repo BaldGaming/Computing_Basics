@@ -1,0 +1,26 @@
+CHIP Comparator3bit {
+    IN a[3], b[3];
+    OUT eq, gt, lt;
+
+    PARTS:
+        // single eq, gt, lt
+        Comparator1bit(a = a[2], b = b[2], eq = eq2, gt = gt2, lt = lt2);
+        Comparator1bit(a = a[1], b = b[1], eq = eq1, gt = gt1, lt = lt1);
+        Comparator1bit(a = a[0], b = b[0], eq = eq0, gt = gt0, lt = lt0);
+    
+        // eq
+        And(a = eq2, b = eq1, out = eq2Andeq1);
+        And(a = eq0, b = eq2Andeq1, out = myeq, out = eq);
+
+        // gt
+        And(a = eq2, b = gt1, out = eq2Andgt1);
+        And(a = eq2, b = eq1, out = eq2Andeq1);
+        And(a = gt0, b = eq2Andeq1, out = eq2Andeq1Andeq0);
+        Or(a = eq2, b = eq2Andgt1, out = eq2Oreq2Andgt1);
+        Or(a = eq2Andeq1Andeq0, b = eq2Oreq2Andgt1, out = mygt, out = gt);
+
+
+        // lt
+        Or(a = myeq, b = mygt, out = eqOrgt);
+        Not(in = eqOrgt, out = lt);
+}

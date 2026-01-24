@@ -1,0 +1,21 @@
+CHIP Comparator4bit {
+    IN a[4], b[4];
+    OUT eq, gt, lt;
+
+    PARTS:
+        // First 3 bits
+        Comparator3bit(a = a[0..2], b = b[0..2], eq = eq210, gt = gt210, lt = lt210);
+        // Forth bit
+        Comparator1bit(a = a[3], b = b[3], eq = eq3, gt = gt3, lt = lt3);
+
+        // eq
+        And(a = eq3, b = eq210, out = myeq, out = eq);
+
+        // gt
+        And(a = eq3, b = gt210, out = eq3Andgt210);
+        Or(a = gt3, b = eq3Andgt210, out = mygt, out = gt);
+
+        // lt
+        Or(a = myeq, b = mygt, out = eqOrgt);
+        Not(in = eqOrgt, out = lt);
+}
