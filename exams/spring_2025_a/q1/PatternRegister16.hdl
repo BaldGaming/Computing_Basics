@@ -1,0 +1,12 @@
+CHIP PatternRegister16 {
+    IN a[16], b[16], load;
+    OUT out[16];
+
+    PARTS:
+        PatternControl(a = a, b = b, out = select);
+        Mux16(a[0..3] = false, a[4..7] = true,  a[8..11] = false, a[12..15] = true,
+              b[0..3] = true,  b[4..7] = false, b[8..11] = true,  b[12..15] = false,
+              sel = select, out = muxOut);
+        
+        Register(in = muxOut, load = load, out = out);
+}

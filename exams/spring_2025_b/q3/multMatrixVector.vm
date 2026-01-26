@@ -1,0 +1,85 @@
+// ARGUMENTS: 0-*res, 1-*mat, 2-*vec, 3-matRows, 4-matCols
+// MULTMATRIXVECTOR:
+function q3.multMatrixVector 5
+// LOCAL: 0-i, 1-j, 2-sum, 3-matVal, 4-vecVal
+
+    // int i = 0
+    push constant 0
+    pop local 0
+
+    // FOR1:
+    label FOR1:
+        // if (!(i < matRows)) goto END_FOR1
+        push local 0
+        push argument 3
+        lt
+        not
+        if-goto END_FOR1
+
+        // sum = 0
+        // j = 0
+        push constant 0
+        push constant 0
+        pop local 2
+        pop local 0
+
+        // FOR2:
+        label FOR2:
+            // if (!(j < matCols)) goto END_FOR2
+            push local 1
+            push argument 4
+            lt
+            not
+            if-goto END_FOR2
+
+            // int matVal = getArray2D(mat, i, j, matCols)
+            push argument 1
+            push local 0
+            push local 1
+            push argument 4
+            call q3.getArray2D 4
+            pop local 3
+
+            // int vecVal = getArray1D(vec, j)
+            push argument 2
+            push local 1
+            call q3.getArray1D
+            pop local 4
+
+            // sum = sum + mult(matVal, vecVal)
+            push local 3
+            push local 4
+            call q3.mult 2
+            push local 2
+            add
+            pop local 2
+
+            // j = j + 1
+            push constant 1
+            push local 1
+            add
+            pop local 1
+
+            // goto FOR2
+            goto FOR2
+
+        // END_FOR2:
+        label END_FOR2:
+            // setArray1D(res, i, sum)
+            push argument 0
+            push local 0
+            push local 2
+            call q3.setArray1D 3
+
+            // i = i + 1
+            push constant 1
+            push local 0
+            add
+            pop local 0
+
+            // goto FOR1
+            goto FOR1
+    
+    // END_FOR1:
+    push constant 0
+    return

@@ -1,0 +1,21 @@
+CHIP EqualBit4 {
+    IN a[4], b[4];
+    OUT out;
+
+    PARTS:
+        Xor(a = a[0], b = b[0], out = xor0);
+        Not(in = xor0, out = res1);
+
+        Xor(a = a[1], b = b[1], out = xor1);
+        Not(in = xor1, out = res2);
+        
+        Xor(a = a[2], b = b[2], out = xor2);
+        Not(in = xor2, out = res3);
+        
+        Xor(a = a[3], b = b[3], out = xor3);
+        Not(in = xor3, out = res4);
+        
+        And(a = res1, b = res2, out = and1);
+        And(a = res3, b = res4, out = and2);
+        And(a = and1, b = and2, out = out);
+}

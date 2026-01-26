@@ -1,0 +1,7 @@
+CHIP ProgressBar {
+    IN reset;
+    OUT out[16];
+
+    PARTS:
+        
+}

@@ -1,0 +1,30 @@
+CHIP PosMax {
+    IN in[16];
+    OUT out;
+
+    PARTS:
+        // MSB == 0
+        Not(in=in[15], out=isPos);
+
+        // all other bits must be 1
+        And(a=in[0],  b=in[1],  out=a01);
+        And(a=in[2],  b=in[3],  out=a23);
+        And(a=in[4],  b=in[5],  out=a45);
+        And(a=in[6],  b=in[7],  out=a67);
+        And(a=in[8],  b=in[9],  out=a89);
+        And(a=in[10], b=in[11], out=a1011);
+        And(a=in[12], b=in[13], out=a1213);
+        
+        And(a=a01,   b=a23,   out=b1);
+        And(a=a45,   b=a67,   out=b2);
+        And(a=a89,   b=a1011, out=b3);
+        And(a=a1213, b=in[14], out=b4);
+
+        And(a=b1, b=b2, out=c1);
+        And(a=b3, b=b4, out=c2);
+        
+        And(a=c1, b=c2, out=allBitsOne);
+
+        // final check
+        And(a=isPos, b=allBitsOne, out=out);
+}

@@ -1,0 +1,129 @@
+// ARGUMENT: 0-n, 1-p
+// MYPOW:
+function q3.myPow 9
+// LOCAL: 0-i, 1-j, 2-k, 3-gsum, 4-tsum, 5-psum, 6-n1, 7-n2, 8-pgsum
+    // gsum = 0
+    push constant 0
+    pop local 3
+
+    // n2 = n
+    push argument 0
+    pop local 7
+
+    // k = 1
+    push constant 1
+    pop local 2
+    
+    // FOR:
+    label FOR
+        // if (!(k < p)) goto END_FOR
+        push local 2
+        push argument 1
+        lt
+        not
+        if-goto END_FOR
+
+        // pgsum = gsum
+        push local 3
+        pop local 8
+
+        // n1 = n
+        push argument 0
+        pop local 6
+
+        // WHILE1:
+        label WHILE1
+            // (!(n1 > 0)) goto END_WHILE1
+            push local 6
+            push constant 0
+            gt
+            not
+            if-goto END_WHILE1
+
+            // psum = 0
+            push constant 0
+            pop local 5
+
+            // tsum = n2
+            push local 7
+            pop local 4
+
+            // i = 1
+            push constant 1
+            pop local 0
+
+            // WHILE2:
+            label WHILE2
+                // if (i > n1) goto END_WHILE2
+                push local 0
+                push local 6
+                gt
+                if-goto END_WHILE2
+
+                // psum = tsum
+                push local 4
+                pop local 5
+                
+                // tsum = tsum + tsum
+                push local 4
+                push local 4
+                add
+                pop local 4
+
+                // j = i
+                push local 0
+                pop local 1
+
+                // i = i + i
+                push local 0
+                push local 0
+                add
+                pop local 0
+
+                // goto WHILE2
+                goto WHILE2
+
+            label END_WHILE2
+                // gsum = gsum + psum
+                push local 5
+                push local 3
+                add
+                pop local 3
+
+                // n1 = n1 - j
+                push local 6
+                push local 1
+                sub
+                pop local 6
+
+                // goto WHILE1
+                goto WHILE1
+            
+        label END_WHILE1
+            // gsum = gsum - pgsum
+            push local 3
+            push local 8
+            sub
+            pop local 3
+
+            // pgsum = gsum
+            push local 3
+            pop local 8
+
+            // n2 = gsum
+            push local 3
+            pop local 7
+
+            // k = k + 1
+            push local 2
+            push constant 1
+            add
+            pop local 2
+
+            // goto FOR
+            goto FOR
+
+    label END_FOR
+        // return gsum
+        push local 3
+        return

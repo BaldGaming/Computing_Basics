@@ -1,0 +1,12 @@
+CHIP Adb16 {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+        IsPositive16(in = in, out = isPos);
+
+        Not16(in = in, out = notIn);
+        Inc16(in = notIn, out = negIn);
+        
+        Mux16(a = negIn, b = in, sel = isPos, out = out);
+}

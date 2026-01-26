@@ -1,0 +1,37 @@
+CHIP PatternMatch16 {
+    IN a[16];
+    OUT match;
+
+    PARTS:
+        // 1010 check
+        EqualBit4(a = a[0..3],   b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 1010a);
+        EqualBit4(a = a[4..7],   b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 1010b);
+        EqualBit4(a = a[8..11],  b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 1010c);
+        EqualBit4(a = a[12..15], b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 1010d);
+        Or(a = 1010a, b = 1010b, out = 1010e);
+        Or(a = 1010c, b = 1010d, out = 1010f);
+        Or(a = 1010e, b = 1010f, out = 1010g);
+
+        // 0101
+        EqualBit4(a = a[0..3],   b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 0101a);
+        EqualBit4(a = a[4..7],   b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 0101b);
+        EqualBit4(a = a[8..11],  b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 0101c);
+        EqualBit4(a = a[12..15], b[0] = true, b[1] = false, b[2] = true, b[3] = false, out = 0101d);
+        Or(a = 0101a, b = 0101b, out = 0101e);
+        Or(a = 0101c, b = 0101d, out = 0101f);
+        Or(a = 0101e, b = 0101f, out = 0101g);
+
+        // 1111
+        EqualBit4(a = a[0..3],   b = true, out = 1111a);
+        EqualBit4(a = a[4..7],   b = true, out = 1111b);
+        EqualBit4(a = a[8..11],  b = true, out = 1111c);
+        EqualBit4(a = a[12..15], b = true, out = 1111d);
+        Or(a = 1111a, b = 1111b, out = 1111e);
+        Or(a = 1111c, b = 1111d, out = 1111f);
+        Or(a = 1111e, b = 1111f, out = 1111g);
+
+        // final parse
+        Or(a = 1010g, b = 0101g, out = final1);
+        Or(a = final1, b = 1111g, out = final2);
+        Or(a = final1, b = final2, out = out);
+}

@@ -1,0 +1,9 @@
+CHIP PatternControl {
+    IN a[16], b[16];
+    OUT select;
+
+    PARTS:
+        PatternMatch16(a = a, out = match1);
+        PatternMatch16(a = b, out = match2);
+        Or(a = match1, b = match2, out = select);
+}

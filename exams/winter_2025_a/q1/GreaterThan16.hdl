@@ -1,0 +1,9 @@
+CHIP GreaterThan16 {
+    IN a[16], b[16];
+    OUT out;
+
+    PARTS:
+        ALU(x = a, y = b, zx = false, nx = true, zy = false, ny = false, f = true, no = true, out = AminusB, zr = zr, ng = ng);
+        Or(a = zr, b = ng, out = out1);
+        Not(in = out1, out = out);
+}

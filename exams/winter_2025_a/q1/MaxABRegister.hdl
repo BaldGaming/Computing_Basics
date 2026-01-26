@@ -1,0 +1,9 @@
+CHIP MaxABRegister {
+    IN a[16], b[16], load;
+    OUT out[16];
+
+    PARTS:
+        Max16(a = a, b = , out = max);
+        Mux16(a = max, b = true, sel = load, out = out1);
+        Register(in = out1, load = true, out = out);
+}

@@ -1,0 +1,16 @@
+CHIP If16 {
+    IN in[16];
+    OUT out;
+
+    PARTS:
+        // MSB check
+        Not(in = in[15], out = MSB); // if MSB == 0, then turns into 1 which is good.
+        
+        // first 4 bits check
+        Or(a = in[0], b = in[1], out = bit12);
+        Or(a = in[2], b = in[3], out = bit34);
+        Or(a = bit12, b = bit34, out = fourBits);
+        Not(in = fourBits, out = notFourBits); // if fourBits == 0, then turns into 1 which is good.
+
+        And(a = notFourBits, b = MSB, out = out);
+}

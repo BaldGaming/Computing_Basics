@@ -1,0 +1,13 @@
+CHIP RegDiv2 {
+    IN in[16], load, div2, reset;
+    OUT out[16];
+
+    PARTS:
+        ShiftRight(in = reg2[16], out = inR, lsb = lsb);
+        Not(in = reg1[0], out = div1);
+        And(a = div1, b = div2, out = div3);
+        Mux16(a = inR, b = in, sel = div3, out = mux1);
+        Mux16(a = in, b = mux1, sel = load, out = mux2);
+        Mux16(a = true, b = mux2, sel = reset, out = mux3);
+        Register(in = mux3, load = true, out = reg1[0], out = reg2[16], out = out);
+}

@@ -1,0 +1,11 @@
+CHIP IsNegEven4 {
+    IN a[4];
+    OUT out;
+
+    PARTS:
+        // LSB must be 0
+        Not(in = a[0], out = lsb);
+
+        // MSB must be 1, so we use AND
+        And(a = lsb, b = a[3], out = out);
+}
